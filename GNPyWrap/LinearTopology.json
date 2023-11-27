@@ -1,0 +1,150 @@
+{
+    "network_name": "EDFA Example Network - P2P",
+"elements": [
+    {
+      "uid": "trx_source",
+      "type": "Transceiver",
+      "metadata": {
+        "location": {
+          "latitude": 0,
+          "longitude": 0,
+          "city": "source<br>site",
+          "region": null
+        }
+      }
+    },
+    {
+      "uid": "trx_destination",
+      "type": "Transceiver",
+      "metadata": {
+        "location": {
+          "latitude": 0,
+          "longitude": 80,
+          "city": "destination<br>site",
+          "region": null
+        }
+      }
+    },
+    {
+      "uid": "roadm_source",
+      "type": "Roadm",
+      "params": {
+        "restrictions": {
+          "preamp_variety_list": ["openroadm_mw_mw_preamp_worstcase_ver5"],
+          "booster_variety_list": ["openroadm_mw_mw_booster"]
+        }
+      },
+      "metadata": {
+        "location": {
+          "latitude": 0,
+          "longitude": 0,
+          "city": "source site",
+          "region": null
+        }
+      }
+    },
+    {
+      "uid": "roadm_destination",
+      "type": "Roadm",
+      "params": {
+        "restrictions": {
+          "preamp_variety_list": ["openroadm_mw_mw_preamp_worstcase_ver5"],
+          "booster_variety_list": ["openroadm_mw_mw_booster"]
+        }
+      },
+      "metadata": {
+        "location": {
+          "latitude": 0,
+          "longitude": 80,
+          "city": "destination site",
+          "region": null
+        }
+      }
+    },
+    {
+      "uid": "fiber",
+      "type": "Fiber",
+      "type_variety": "SSMF",
+      "params": {
+        "length": 450.0,
+        "loss_coef": 0.2,
+        "length_units": "km",
+        "con_in": 0,
+        "con_out": 0
+      },
+      "metadata": {
+        "location": {
+          "latitude": 0,
+          "longitude": 40.0,
+          "city": null,
+          "region": null
+        }
+      }
+    },
+    {
+      "uid": "Edfa_booster_roadm_source_to_fiber",
+      "type": "Edfa",
+      "type_variety": "openroadm_mw_mw_booster",
+      "operational": {
+        "gain_target": 22.0,
+        "delta_p": 0.0,
+        "tilt_target": 0,
+        "out_voa": 0
+      },
+      "metadata": {
+        "location": {
+          "latitude": 0,
+          "longitude": 0,
+          "city": "source site",
+          "region": null
+        }
+      }
+    },
+    {
+      "uid": "Edfa_preamp_roadm_destination_from_fiber",
+      "type": "Edfa",
+      "type_variety": "openroadm_mw_mw_preamp_worstcase_ver5",
+      "operational": {
+        "gain_target": 22.0,
+        "delta_p": 0.0,
+        "tilt_target": 0,
+        "out_voa": 0
+      },
+      "metadata": {
+        "location": {
+          "latitude": 0,
+          "longitude": 80,
+          "city": "destination site",
+          "region": null
+        }
+      }
+    }
+  ],
+  "connections": [
+    {
+      "from_node": "trx_source",
+      "to_node": "roadm_source"
+    },
+    {
+      "from_node": "roadm_source",
+      "to_node": "Edfa_booster_roadm_source_to_fiber"
+    },
+    {
+      "from_node": "Edfa_booster_roadm_source_to_fiber",
+      "to_node": "fiber"
+    }, 
+    {
+      "from_node": "fiber",
+      "to_node": "Edfa_preamp_roadm_destination_from_fiber"
+    },
+    {
+      "from_node": "Edfa_preamp_roadm_destination_from_fiber",
+      "to_node": "roadm_destination"
+    },
+    {
+      "from_node": "roadm_destination",
+      "to_node": "trx_destination"
+    }
+   
+  ]
+}
